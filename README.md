@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://github.com/JarrentWu1031/AnimateAnyMesh/blob/main/assets/logo.png" width="400px">
+  <img src="https://github.com/JarrentWu1031/AnimateAnyMesh/blob/main/assets/logo.png" width="350px">
   
   # A Feed-Forward 4D Foundation Model for Text-Driven Universal Mesh Animation
 </div>
