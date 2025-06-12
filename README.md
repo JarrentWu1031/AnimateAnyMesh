@@ -18,3 +18,14 @@ We present <b>AnimateAnyMesh</b>: the first feed-forward universal mesh animatio
 </div>
 
 Code will be released upon acceptance!!! Please stay tuned!!!
+
+## ⭐ Citation
+If you find our work useful for your research, please star this repo and cite our paper. Thanks!
+```bibtex
+@article{wu2025animateanymesh,
+    author = {Wu, Zijie and Yu, Chaohui and Wang, Fan and Bai, Xiang.},
+    title  = {AnimateAnyMesh: A Feed-Forward 4D Foundation Model for Text-Driven Universal Mesh Animation},
+    journal = {arXiv preprint arxiv:2506.09982},
+    year   = {2025},
+}
+```
