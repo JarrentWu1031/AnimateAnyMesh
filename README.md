@@ -11,13 +11,21 @@ Zijie Wu<sup>1,2</sup>, Chaohui Yu<sup>2</sup>, Fan Wang<sup>2</sup>, Xiang Bai<
 <a href="https://arxiv.org/abs/2506.09982"><img src='https://img.shields.io/badge/arXiv-AnimateAnyMesh-red?logo=arxiv' alt='Paper PDF'></a>
 <a href="https://www.youtube.com/watch?v=q8xH9B0S4y0"><img src='https://img.shields.io/badge/Video-Demo-red?logo=youtube&color=blue'></a>
 
+We present <b>AnimateAnyMesh</b>: the first feed-forward universal mesh animation framework that enables efficient motion generation for arbitrary 3D meshes. Given a static mesh and prompt, our method generates high-quality animations in only a few seconds.
+
 ![Demo GIF](https://github.com/animateanymesh/AnimateAnyMesh/blob/main/demo_source/github_demo.gif)
+
+<!-- 
 
 We present <b>AnimateAnyMesh</b>: the first feed-forward universal mesh animation framework that enables efficient motion generation for arbitrary 3D meshes. Given a static mesh and prompt, our method generates high-quality animations in only a few seconds.
 
 <div align=center>
 <img src="https://github.com/JarrentWu1031/AnimateAnyMesh/blob/main/assets/teaser.png" width=85%>
 </div>
+
+-->
+
+
 
 Code will be released upon acceptance!!! Please stay tuned!!!
 
