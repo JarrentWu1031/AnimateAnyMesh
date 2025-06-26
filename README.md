@@ -1,8 +1,10 @@
 <div align="center">
   <img src="https://github.com/JarrentWu1031/AnimateAnyMesh/blob/main/assets/logo.png" width="300px">
   
-  # A Feed-Forward 4D Foundation Model for Text-Driven Universal Mesh Animation
+
 </div>
+
+# A Feed-Forward 4D Foundation Model for Text-Driven Universal Mesh Animation (ICCV 2025)
 
 Zijie Wu<sup>1,2</sup>, Chaohui Yu<sup>2</sup>, Fan Wang<sup>2</sup>, Xiang Bai<sup>1</sup> <br>
 <sup>1</sup>Huazhong University of Science and Technology (HUST), <sup>2</sup>DAMO Acadamy, Alibaba Group
@@ -25,9 +27,11 @@ We present <b>AnimateAnyMesh</b>: the first feed-forward universal mesh animatio
 
 -->
 
+## 🔥 Latest News
 
+* Jun 26, 2025: 👋 **AnimateAnyMesh** has been accepted by [ICCV2025](https://iccv.thecvf.com/)! We will release the code and the DyMesh Dataset mentioned in the paper asap. Please stay tuned for updates！
+* Jun 11, 2025: 👋 The paper of **AnimateAnyMesh** is available at [Arxiv](https://arxiv.org/abs/2506.09982)! 
 
-Code will be released upon acceptance!!! Please stay tuned!!!
 
 ## ⭐ Citation
 If you find our work useful for your research, please star this repo and cite our paper. Thanks!
