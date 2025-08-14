@@ -38,7 +38,7 @@ We present <b>AnimateAnyMesh</b>: the first feed-forward universal mesh animatio
 **Text-driven mesh animation.**
 Use command like:
 ```
-python test_drive.py --rf_exp <rf model> --rf_epoch <inference epoch> --rescale --test_name <source .glb file> --prompt <animation prompt> --num_traj <sampled trajs>  --seed <seed> --azi <render azimuth degree> --ele <render elevation degree>
+python test_drive.py --rf_exp <rf model> --rf_epoch <inference epoch> --test_name <source .glb file> --prompt <animation prompt> --num_traj <sampled trajs>  --seed <seed> --azi <render azimuth degree> --ele <render elevation degree>
 ```
 
 ## ⭐ Citation
