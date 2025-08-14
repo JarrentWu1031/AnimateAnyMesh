@@ -1,7 +1,5 @@
 import torch
 import numpy as np
-from pytorch3d.structures import Meshes
-from pytorch3d.ops import mesh_face_areas_normals
 import time
 
 def get_adjacency_matrix(vertices, faces, valid_len):
