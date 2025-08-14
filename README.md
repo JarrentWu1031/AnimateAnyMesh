@@ -29,9 +29,17 @@ We present <b>AnimateAnyMesh</b>: the first feed-forward universal mesh animatio
 
 ## 🔥 Latest News
 
+* Aug 14, 2025: 👋 The inference code of **AnimateAnyMesh** has been released! Thanks for the waiting! The checkpoint will be released in a few days (Still training under the clean code).
 * Jun 26, 2025: 👋 **AnimateAnyMesh** has been accepted by [ICCV2025](https://iccv.thecvf.com/)! We will release the code and the DyMesh Dataset mentioned in the paper asap. Please stay tuned for updates！
 * Jun 11, 2025: 👋 The paper of **AnimateAnyMesh** is available at [Arxiv](https://arxiv.org/abs/2506.09982)! 
 
+## 📖 Usage
+
+**Text-driven mesh animation.**
+Use command like:
+```
+python test_drive.py --rf_exp <rf model> --rf_epoch <inference epoch> --rescale --test_name <source .glb file> --prompt <animation prompt> --num_traj <sampled trajs>  --seed <seed> --azi <render azimuth degree> --ele <render elevation degree>
+```
 
 ## ⭐ Citation
 If you find our work useful for your research, please star this repo and cite our paper. Thanks!
