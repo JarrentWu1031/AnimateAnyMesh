@@ -7,7 +7,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 from transformers import (
     CLIPTextModel,
-    AutoTokenizer,
+    CLIPTokenizer,
 )
 from .util import timestep_embedding
 
@@ -55,22 +55,13 @@ class QKVMultiheadAttention_flash2(nn.Module):
     def forward(self, qkv):
         bs, n_ctx, width = qkv.shape
         attn_ch = width // self.heads // 3
-        
-        # 重塑并分离Q,K,V
         qkv = qkv.view(bs, n_ctx, self.heads, -1)
         q, k, v = torch.split(qkv, attn_ch, dim=-1)
-        
-        # 调整形状以匹配scaled_dot_product_attention的输入要求 [batch_size, num_heads, seq_length, head_dim]
         q = q.transpose(1, 2) 
         k = k.transpose(1, 2)
         v = v.transpose(1, 2)
-        
-        # 使用scaled_dot_product_attention
         output = F.scaled_dot_product_attention(q, k, v)
-        
-        # 调整输出形状 [batch_size, seq_length, width]
         output = output.transpose(1, 2).reshape(bs, n_ctx, -1)
-        
         return output
 
 class MultiheadAttention(nn.Module):
@@ -260,9 +251,9 @@ class DyMeshMMDiT(nn.Module):
         self.ln_pre_text = nn.LayerNorm(width, device=device, dtype=dtype)
         self.ln_post = nn.LayerNorm(width, device=device, dtype=dtype)
         
-        self.clip_text_model = CLIPTextModel.from_pretrained("openai/clip-vit-base-patch32").to(device)
-        self.tokenizer = AutoTokenizer.from_pretrained("openai/clip-vit-base-patch32")
-        self.clip_token_mlp = nn.Linear(512, self.backbone.width, device=device, dtype=dtype)
+        self.clip_text_model = CLIPTextModel.from_pretrained("sd-legacy/stable-diffusion-v1-5", subfolder="text_encoder").to(device)
+        self.tokenizer = CLIPTokenizer.from_pretrained("sd-legacy/stable-diffusion-v1-5", subfolder="tokenizer")
+        self.clip_token_mlp = nn.Linear(768, self.backbone.width, device=device, dtype=dtype)
 
         self.input_proj = nn.Linear(input_channels, width, device=device, dtype=dtype)
         self.output_proj = nn.Linear(width, output_channels, device=device, dtype=dtype)
@@ -288,8 +279,8 @@ class DyMeshMMDiT(nn.Module):
                 padding="max_length",
                 truncation=True,
                 return_tensors="pt",
-            ).to(self.clip_text_model.device)
-            text_embed = self.clip_text_model(**text_inputs).last_hidden_state # B, 77, 768
+            ).input_ids.to(self.clip_text_model.device)
+            text_embed = self.clip_text_model(text_inputs)[0] # B, 77, 768
         text_embed = self.clip_token_mlp(text_embed)
         if self.training:
             mask = torch.rand(size=[len(x)]) >= self.cond_drop_prob
@@ -297,4 +288,5 @@ class DyMeshMMDiT(nn.Module):
         else:
             mask = torch.tensor([text != '' for text in texts], dtype=torch.bool)
             text_embed = text_embed * mask[:, None, None].to(text_embed)
+      
         return self._forward_cogx(x, text_embed, t_embed)
