@@ -6,7 +6,6 @@ import pickle
 import json
 import numpy as np
 
-from diffusion.configs import get_model_configs
 from diffusion.rf_diffusion import rf_sample
 from networks.configs import model_from_config
 from networks.dymeshvae import DyMeshVAE
