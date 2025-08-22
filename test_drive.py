@@ -32,18 +32,19 @@ def main(opt):
 
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     
-    # set seed
+    # Set seed
     seed = opt.seed
     torch.manual_seed(seed)
     torch.cuda.manual_seed_all(seed)
-
+    
+    # Video save dir
     video_save_dir = os.path.join(opt.video_save_dir, opt.rf_exp)
     if not os.path.exists(video_save_dir):
         os.makedirs(video_save_dir)
     
     # Load the unified training configuration file
     print("Loading unified training configuration...")
-    config_path = os.path.join(opt.model_dir, opt.rf_exp, "training_config.json")
+    config_path = os.path.join(opt.rf_model_dir, opt.rf_exp, "training_config.json")
     if not os.path.exists(config_path):
         raise FileNotFoundError(f"Unified config not found at: {config_path}. This file is essential for inference.")
     
@@ -80,7 +81,7 @@ def main(opt):
     
     # RF model
     print("Loading RF Model...")
-    rf_model_dir = os.path.join(opt.model_dir, opt.rf_exp, "rf_epoch_{}.pth".format(opt.rf_epoch))
+    rf_model_dir = os.path.join(opt.rf_model_dir, opt.rf_exp, "rf_epoch_{}.pth".format(opt.rf_epoch))
     rf_model = model_from_config(rf_config, device)
     rf_model = load_compatible_checkpoint(rf_model, rf_model_dir, device)
     rf_model.eval()
@@ -96,8 +97,9 @@ def main(opt):
         merged_verts, merged_faces, all_indices = merge_identical_vertices_with_indices(all_vertices, all_faces)
         vertices, faces = torch.tensor(merged_verts, dtype=torch.float32), torch.tensor(merged_faces, dtype=torch.int64)
         
-        # opt.num_traj = max(512, vertices.shape[0]//16)
-        print(vertices.shape, opt.num_traj) # N*3, k
+        if opt.num_traj <= 0:
+            opt.num_traj = max(512, vertices.shape[0]//8)
+            print("The number of sampled trajs is not specified, set to {} by default ({} vertices in total)!!!".format(opt.num_traj, vertices.shape[0]))
         
         # recenter & rescale    
         center = (vertices.max(dim=0)[0] + vertices.min(dim=0)[0]) / 2
@@ -140,38 +142,41 @@ def main(opt):
             xt_start_s = samples[:, :, opt.f0_channels:] * xt_std + xt_mean 
             samples = torch.cat([x0_start_s, xt_start_s], dim=-1)
         outputs = vae_model(vertices, vertices[:, 0], samples=samples, faces=faces, valid_mask=valid_mask, adj_matrix=adj_matrix, num_traj=opt.num_traj, just_decode=True)
-        outputs = outputs * 1.3
 
         # assign trajs for each parts
         trajs = [outputs[0][:, idx].cpu() for idx in all_indices]
         # render video
-        drive_mesh_with_trajs_frames(mesh_objects, trajs, "{}/{}".format(video_save_dir, filepath.split("/")[-1].split(".")[0]), azi=opt.azi, ele=opt.ele)
+        drive_mesh_with_trajs_frames(mesh_objects, trajs, "{}/{}".format(video_save_dir, filepath.split("/")[-1].split(".")[0]), azi=opt.azi, ele=opt.ele, export_format=opt.export_format)
     
 if __name__ == '__main__':
     import argparse
 
     parser = argparse.ArgumentParser()
     parser.add_argument("--data_dir", type=str, default="./all_glbs")
-    parser.add_argument("--vae_dir", type=str, default="./dvae_ckpts")
-    parser.add_argument("--model_dir", type=str, default="./rf_ckpts")
-    parser.add_argument("--json_dir", type=str, default="./dvae_factors")
-    parser.add_argument("--rf_exp", type=str, default="rf_4096v_16f_default")
-    parser.add_argument("--rf_epoch", type=int, default=100)
+    parser.add_argument("--vae_dir", type=str, default="./checkpoints")
+    parser.add_argument("--rf_model_dir", type=str, default="./checkpoints")
+    parser.add_argument("--json_dir", type=str, default="./checkpoints/dvae_factors")
+    parser.add_argument("--rf_exp", type=str, default="rf_model")
+    parser.add_argument("--rf_epoch", type=str, default='f')
     parser.add_argument("--video_save_dir", type=str, default="./output_videos")
     parser.add_argument("--seed", type=int, default=666)
-    parser.add_argument("--num_traj", type=int, default=512)
+    parser.add_argument("--num_traj", type=int, default=-1)
     parser.add_argument("--test_name", type=str, required=True)
     parser.add_argument("--prompt", type=str, required=True)
     parser.add_argument("--rescale", action="store_true")
     parser.add_argument("--guidance_scale", type=float, default=3.0)
-    parser.add_argument("--base_name", type=str, default="40m", choices=["40m", "300m", "1b"])
     parser.add_argument("--max_length", type=int, default=4096)
     parser.add_argument("--azi", type=float, default=0.0)
     parser.add_argument("--ele", type=float, default=0.0)
+    parser.add_argument("--export_format", type=str, default="none", choices=["none", "abc", "fbx"])
     
     opt = parser.parse_args()
 
     opt.rescale = True
 
     main(opt)
+
+    '''
+    python test_drive.py --vae_dir ./checkpoints --rf_model_dir ./checkpoints --json_dir ./checkpoints/dvae_factors --rf_exp rf_model --rf_epoch f --seed 666 --test_name dragon --prompt "The object is flying" --export_format fbx
+    '''
    
