@@ -43,7 +43,7 @@ The code is tested under Python 3.11, CUDA12.8 (CUDA 11.8+ recommended).
 ```
 pip install -r requirements.txt
 ```
-You may have to install some dependencies when using bpy.
+You may have to install some dependencies when using bpy. You also have to download the model weights ([HuggingFace](https://huggingface.co/JarrentWu/AnimateAnyMesh/tree/main), [Google Drive](https://drive.google.com/drive/folders/1maN5AHKKRDVylKzNuhX8NkBsOZylzA3u)) and unzip them under the main folder.
 
 ## 📖 Usage
 
@@ -56,8 +56,9 @@ Then, you are supposed to get a frontal rendered video of a flying dragon & the 
 
 ## 🎬 Animation Example
 
-The exported animated dragon viewed in Blender: 
 ![Demo GIF](https://github.com/animateanymesh/AnimateAnyMesh/blob/main/demo_source/dragon_demo.gif)
+
+The exported animated dragon viewed in Blender.
 
 ## ⭐ Citation
 If you find our work useful for your research, please star this repo and cite our paper. Thanks!
