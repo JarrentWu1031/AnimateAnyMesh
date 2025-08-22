@@ -48,9 +48,11 @@ You may have to install some dependencies when using bpy. You also have to downl
 ## 📖 Usage
 
 **Text-driven mesh animation.**
-Use command like:
+
+For the input mesh format, we only support .glb now. Please make sure the source mesh is static. You can find your desired ones at [Sketchfab](https://sketchfab.com/). 
+To animate a static mesh, Use command like:
 ```
-python test_drive.py --vae_dir ./checkpoints --rf_model_dir ./checkpoints --json_dir ./checkpoints/dvae_factors --rf_exp rf_model --rf_epoch f --seed 666 --test_name dragon --prompt "The object is flying" --export_format fbx
+python test_drive.py --data_dir ./examples --vae_dir ./checkpoints --rf_model_dir ./checkpoints --json_dir ./checkpoints/dvae_factors --rf_exp rf_model --rf_epoch f --seed 666 --test_name dragon --prompt "The object is flying" --export_format fbx
 ```
 Then, you are supposed to get a frontal rendered video of a flying dragon & the corresponding FBX export file.
 
