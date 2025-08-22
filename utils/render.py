@@ -196,55 +196,20 @@ def render_dynamic_mesh_direct_to_video(vertices, face_data, video_save_dir, sav
     print("Rendering finished!!!")
 
 def setup_camera_to_fit_object(camera, vertex_trajectories, azi=0, ele=0, margin=0.1):
-    """
-    设置相机和灯光，确保整个动画轨迹都在视野内，并留有安全边距。
-
-    参数:
-    camera (bpy.types.Object): 要设置的相机对象。
-    vertex_trajectories (np.ndarray): (frames, verts, 3) 的顶点数据。
-    azi (float): 相机方位角。
-    ele (float): 相机仰角。
-    margin (float): 安全边距。0.1 表示在物体周围留出10%的额外空间。
-    """
-    # --- 计算整个动画的边界框 ---
-    # 既然数据已经归一化到[-1, 1]，我们可以简化这个过程。
-    # 但为了代码的健壮性，我们还是从数据中计算，以防万一。
     min_coords = np.min(vertex_trajectories, axis=(0, 1))
     max_coords = np.max(vertex_trajectories, axis=(0, 1))
-    
-    # 物体的中心点（应该是原点附近）
     center = (min_coords + max_coords) / 2.0
-    
-    # 物体的最大尺寸
     size = np.max(max_coords - min_coords)
-
-    # --- 核心修改：计算相机距离时加入安全边距 ---
     fov = camera.data.angle
-    # 在原有尺寸上增加边距
     effective_size = size * (1 + margin)
-    # 根据新的有效尺寸计算距离
     distance = effective_size / (2 * math.tan(fov / 2))
-
-    # --- 定位相机 ---
-    # 将相机放在一个基础位置，然后根据角度旋转
-    base_offset = mathutils.Vector((0, -distance, 0)) # 简单地放在Y轴负方向
-    
-    # 创建旋转矩阵
+    base_offset = mathutils.Vector((0, -distance, 0)) 
     rotation_matrix = mathutils.Euler((math.radians(ele), 0, math.radians(azi)), 'ZYX').to_matrix()
-    
-    # 应用旋转得到最终的相机位置偏移
     final_offset = rotation_matrix @ base_offset
-    
-    # 设置相机最终位置
     camera.location = mathutils.Vector(center) + final_offset
-    
-    # 让相机始终朝向物体中心
     direction = mathutils.Vector(center) - camera.location
     rot_quat = direction.to_track_quat('-Z', 'Y')
     camera.rotation_euler = rot_quat.to_euler()
-
-    # --- 设置灯光 (可以保持不变或简化) ---
-    # 为了简洁，我们直接复用之前的灯光设置逻辑
     azi_rad = math.radians(azi)
     ele_rad = math.radians(ele)
     key_light, fill_light, rim_light, ambient_light = setup_lighting()
@@ -276,37 +241,18 @@ def setup_camera_to_fit_object(camera, vertex_trajectories, azi=0, ele=0, margin
 def render_dynamic_mesh_to_frames(vertices, face_data, output_dir, folder_name, 
                                   resolution=512, 
                                   azi=0, ele=0, file_format='PNG'):
-    """
-    渲染动态网格的每一帧为单独的图像文件，并保存在指定的文件夹中。
-
-    参数:
-    vertices (np.ndarray or torch.Tensor): 顶点轨迹数据，形状为 (num_frames, num_verts, 3)。
-    face_data (np.ndarray or torch.Tensor): 面索引数据，形状为 (num_faces, 3)。
-    output_dir (str): 保存输出文件夹的根目录。
-    folder_name (str): 用于存放所有渲染帧的文件夹的名称。
-    resolution (int): 渲染图像的宽度/高度（像素）。
-    azi (float): 相机的方位角（水平旋转角度）。
-    ele (float): 相机的仰角（垂直旋转角度）。
-    file_format (str): 输出图像的格式，如 'PNG', 'JPEG'。
-    """
-    # --- 1. 场景清理 ---
     bpy.ops.object.select_all(action='DESELECT')
     bpy.ops.object.select_by_type(type='MESH')
     bpy.ops.object.delete()
     if "LookAtTarget" in bpy.data.objects:
         bpy.data.objects.remove(bpy.data.objects["LookAtTarget"], do_unlink=True)
-
-    # --- 2. 加载和创建网格 ---
     if hasattr(vertices, 'numpy'): vertices = vertices.numpy()
     if hasattr(face_data, 'numpy'): face_data = face_data.numpy()
     vertex_trajectories = vertices
-    
     initial_verts = vertex_trajectories[0]
     mesh_obj = create_mesh("DynamicMesh", initial_verts, face_data)
     gradient_mat = create_gradient_material()
     mesh_obj.data.materials.append(gradient_mat)
-
-    # --- 3. 设置相机和灯光 ---
     scene = bpy.context.scene
     cam = bpy.data.objects.get('Camera')
     if not cam:
@@ -314,68 +260,45 @@ def render_dynamic_mesh_to_frames(vertices, face_data, output_dir, folder_name,
         cam = bpy.context.object
         cam.name = 'Camera'
     setup_camera_to_fit_object(cam, vertex_trajectories, azi=azi, ele=ele)
-
-    # --- 4. 创建基于Shape Key的动画 ---
     mesh_obj.shape_key_add(name='Basis')
     if mesh_obj.data.shape_keys.animation_data is None:
         mesh_obj.data.shape_keys.animation_data_create()
-
-    # 这个循环为每一帧创建一个shape key并设置关键帧，实现动画
     for frame_idx in range(len(vertex_trajectories)):
         shape_key = mesh_obj.shape_key_add(name=f'Frame_{frame_idx}')
         shape_key.data.foreach_set('co', vertex_trajectories[frame_idx].flatten())
-        
-        # 为shape key的value属性插入关键帧，使其只在当前帧激活
         shape_key.value = 0
         shape_key.keyframe_insert(data_path='value', frame=frame_idx - 1 if frame_idx > 0 else 0)
         shape_key.value = 1
         shape_key.keyframe_insert(data_path='value', frame=frame_idx)
         shape_key.value = 0
         shape_key.keyframe_insert(data_path='value', frame=frame_idx + 1)
-        
-        # 将插值模式设置为'CONSTANT'，确保shape key是瞬间变化的
         fcurve = mesh_obj.data.shape_keys.animation_data.action.fcurves.find(f'key_blocks["{shape_key.name}"].value')
         if fcurve:
             for kf_point in fcurve.keyframe_points:
                 kf_point.interpolation = 'CONSTANT'
-
-    # --- 5. 设置场景和渲染参数 ---
     scene.frame_start = 0
     scene.frame_end = len(vertex_trajectories) - 1
-    
-    # 渲染引擎设置
     scene.render.engine = 'CYCLES'
     scene.cycles.samples = 128
     bpy.context.preferences.addons["cycles"].preferences.compute_device_type = "CUDA"
     scene.cycles.device = "GPU"
-    
-    # 分辨率设置
     resolution_x = resolution_y = resolution
     scene.render.resolution_x = resolution_x
     scene.render.resolution_y = resolution_y
-    scene.render.fps = 10 # 帧率仍然相关，因为它影响动画速度
-
-    # **核心修改：设置输出为图像序列**
+    scene.render.fps = 10 
     scene.render.image_settings.file_format = file_format
     if file_format == 'PNG':
-        scene.render.image_settings.color_mode = 'RGBA'  # RGBA支持透明通道
-        scene.render.film_transparent = True             # 启用透明背景
+        scene.render.image_settings.color_mode = 'RGBA'  
+        scene.render.film_transparent = True            
     else:
         scene.render.image_settings.color_mode = 'RGB'
         scene.render.film_transparent = False
-
-    # **核心修改：设置输出路径**
-    # 创建保存帧的文件夹
     frames_save_path = os.path.join(output_dir, folder_name)
     os.makedirs(frames_save_path, exist_ok=True)
-    
-    # 设置Blender的渲染输出路径。注意末尾的'frame_'，Blender会自动添加帧序号和扩展名
     scene.render.filepath = os.path.join(frames_save_path, 'frame_')
-
-    # --- 6. 开始渲染 ---
-    print(f"开始渲染图像序列 (共 {scene.frame_end + 1} 帧), 渲染结果将保存到: {frames_save_path}")
+    print(f"Start rendering ({scene.frame_end + 1} frames in total), saved to: {frames_save_path}")
     bpy.ops.render.render(animation=True)
-    print("所有帧渲染完成!!!")
+    print("Rendering finished!!!")
 ###
 
 ### Render DMesh with gt texture
