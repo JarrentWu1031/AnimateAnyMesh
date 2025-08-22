@@ -9,9 +9,12 @@
 Zijie Wu<sup>1,2</sup>, Chaohui Yu<sup>2</sup>, Fan Wang<sup>2</sup>, Xiang Bai<sup>1</sup> <br>
 <sup>1</sup>Huazhong University of Science and Technology (HUST), <sup>2</sup>DAMO Acadamy, Alibaba Group
 
+
 <a href="https://animateanymesh.github.io/AnimateAnyMesh/"><img src='https://img.shields.io/badge/Project-AnimateAnyMesh-brightgreen?logo=github' alt='Project'></a>
-<a href="https://arxiv.org/abs/2506.09982"><img src='https://img.shields.io/badge/arXiv-AnimateAnyMesh-red?logo=arxiv' alt='Paper PDF'></a>
-<a href="https://www.youtube.com/watch?v=q8xH9B0S4y0"><img src='https://img.shields.io/badge/Video-Demo-red?logo=youtube&color=blue'></a>
+<a href="https://arxiv.org/abs/2506.09982"><img src='https://img.shields.io/badge/arXiv-AnimateAnyMesh-B31B1B?logo=arxiv' alt='Paper PDF'></a>
+<a href="https://www.youtube.com/watch?v=q8xH9B0S4y0"><img src='https://img.shields.io/badge/Video-Demo-FF0000?logo=youtube' alt='Video'></a>
+<a href="https://huggingface.co/JarrentWu/AnimateAnyMesh/tree/main"><img src='https://img.shields.io/badge/HuggingFace-Weights-yellow?logo=huggingface' alt='Hugging Face Weights'></a>
+<a href="https://drive.google.com/drive/folders/1maN5AHKKRDVylKzNuhX8NkBsOZylzA3u"><img src='https://img.shields.io/badge/Google%20Drive-Weights-blue?logo=googledrive&logoColor=white' alt='Download from Google Drive'></a>
 
 We present <b>AnimateAnyMesh</b>: the first feed-forward universal mesh animation framework that enables efficient motion generation for arbitrary 3D meshes. Given a static mesh and prompt, our method generates high-quality animations in only a few seconds.
 
@@ -29,17 +32,32 @@ We present <b>AnimateAnyMesh</b>: the first feed-forward universal mesh animatio
 
 ## 🔥 Latest News
 
+* Aug 22, 2025: 👋 The model weights ([HuggingFace](https://huggingface.co/JarrentWu/AnimateAnyMesh/tree/main), [Google Drive](https://drive.google.com/drive/folders/1maN5AHKKRDVylKzNuhX8NkBsOZylzA3u)) of **AnimateAnyMesh** has been released! Thanks for the waiting! We also add FBX/ABC export code for a better usage. You can **Animate Your Static Mesh Now!!!**
 * Aug 14, 2025: 👋 The inference code of **AnimateAnyMesh** has been released! Thanks for the waiting! The checkpoint will be released in a few days (Still training under the clean code).
 * Jun 26, 2025: 👋 **AnimateAnyMesh** has been accepted by [ICCV2025](https://iccv.thecvf.com/)! We will release the code and the DyMesh Dataset mentioned in the paper asap. Please stay tuned for updates！
 * Jun 11, 2025: 👋 The paper of **AnimateAnyMesh** is available at [Arxiv](https://arxiv.org/abs/2506.09982)! 
+
+## 🔧 Preparation
+
+The code is tested under Python 3.11, CUDA12.8 (CUDA 11.8+ recommended).
+```
+pip install -r requirements.txt
+```
+You may have to install some dependencies when using bpy.
 
 ## 📖 Usage
 
 **Text-driven mesh animation.**
 Use command like:
 ```
-python test_drive.py --rf_exp <rf model> --rf_epoch <inference epoch> --test_name <source .glb file> --prompt <animation prompt> --num_traj <sampled trajs>  --seed <seed> --azi <render azimuth degree> --ele <render elevation degree>
+python test_drive.py --vae_dir ./checkpoints --rf_model_dir ./checkpoints --json_dir ./checkpoints/dvae_factors --rf_exp rf_model --rf_epoch f --seed 666 --test_name dragon --prompt "The object is flying" --export_format fbx
 ```
+Then, you are supposed to get a frontal rendered video of a flying dragon & the corresponding FBX export file.
+
+## 🎬 Animation Example
+
+The exported animated dragon viewed in Blender: 
+![Demo GIF](https://github.com/animateanymesh/AnimateAnyMesh/blob/main/demo_source/dragon_demo.gif)
 
 ## ⭐ Citation
 If you find our work useful for your research, please star this repo and cite our paper. Thanks!
@@ -51,3 +69,6 @@ If you find our work useful for your research, please star this repo and cite ou
     year   = {2025},
 }
 ```
+
+## ❤️ Acknowledgement 
+Our code references some great repos, which are [3DShape2VecSet](https://github.com/1zb/3DShape2VecSet), [Point-E](https://github.com/openai/point-e), [rectified-flow-pytorch](https://github.com/lucidrains/rectified-flow-pytorch) and [CogVideoX](https://github.com/zai-org/CogVideo). We thank the authors for their excellent works! <br>
