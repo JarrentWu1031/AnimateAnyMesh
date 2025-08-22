@@ -41,6 +41,11 @@ We present <b>AnimateAnyMesh</b>: the first feed-forward universal mesh animatio
 
 The code is tested under Python 3.11, CUDA12.8 (CUDA 11.8+ recommended).
 ```
+// Create conda env & Activate
+conda create -n animateanymesh python=3.11
+conda activate animateanymesh
+
+// Install dependencies
 pip install -r requirements.txt
 ```
 You may have to install some dependencies when using bpy. You also have to download the model weights ([HuggingFace](https://huggingface.co/JarrentWu/AnimateAnyMesh/tree/main), [Google Drive](https://drive.google.com/drive/folders/1maN5AHKKRDVylKzNuhX8NkBsOZylzA3u)) and unzip them under the main folder.
