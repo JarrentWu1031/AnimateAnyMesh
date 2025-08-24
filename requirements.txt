@@ -4,4 +4,9 @@ torchdiffeq==0.2.5
 transformers==4.55.3
 bpy==4.5.1
 git+https://github.com/facebookresearch/pytorch3d.git
-
+einops
+imageio[ffmpeg]
+imageio[pyav]
+pillow
+opencv-python
+psutil
