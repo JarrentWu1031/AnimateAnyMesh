@@ -14,7 +14,7 @@ Zijie Wu<sup>1,2</sup>, Chaohui Yu<sup>2</sup>, Fan Wang<sup>2</sup>, Xiang Bai<
 <a href="https://arxiv.org/abs/2506.09982"><img src='https://img.shields.io/badge/arXiv-AnimateAnyMesh-B31B1B?logo=arxiv' alt='Paper PDF'></a>
 <a href="https://www.youtube.com/watch?v=q8xH9B0S4y0"><img src='https://img.shields.io/badge/Video-Demo-FF0000?logo=youtube' alt='Video'></a>
 <a href="https://huggingface.co/JarrentWu/AnimateAnyMesh/tree/main"><img src='https://img.shields.io/badge/HuggingFace-Weights-yellow?logo=huggingface' alt='Hugging Face Weights'></a>
-<a href="https://drive.google.com/drive/folders/1maN5AHKKRDVylKzNuhX8NkBsOZylzA3u"><img src='https://img.shields.io/badge/Google%20Drive-Weights-blue?logo=googledrive&logoColor=white' alt='Download from Google Drive'></a>
+<a href="https://drive.google.com/file/d/1_ixt6pWlUpFvwFn6eV3xuOf1G7g6ijfo/view?usp=sharing"><img src='https://img.shields.io/badge/Google%20Drive-Weights-blue?logo=googledrive&logoColor=white' alt='Download from Google Drive'></a>
 
 We present <b>AnimateAnyMesh</b>: the first feed-forward universal mesh animation framework that enables efficient motion generation for arbitrary 3D meshes. Given a static mesh and prompt, our method generates high-quality animations in only a few seconds.
 
@@ -32,7 +32,7 @@ We present <b>AnimateAnyMesh</b>: the first feed-forward universal mesh animatio
 
 ## 🔥 Latest News
 
-* Aug 22, 2025: 👋 The model weights ([HuggingFace](https://huggingface.co/JarrentWu/AnimateAnyMesh/tree/main), [Google Drive](https://drive.google.com/drive/folders/1maN5AHKKRDVylKzNuhX8NkBsOZylzA3u)) of **AnimateAnyMesh** has been released! Thanks for the waiting! We also add FBX/ABC export code for a better usage. You can **Animate Your Static Mesh Now!!!**
+* Aug 22, 2025: 👋 The model weights ([HuggingFace](https://huggingface.co/JarrentWu/AnimateAnyMesh/tree/main), [Google Drive](https://drive.google.com/file/d/1_ixt6pWlUpFvwFn6eV3xuOf1G7g6ijfo/view?usp=sharing)) of **AnimateAnyMesh** has been released! Thanks for the waiting! We also add FBX/ABC export code for a better usage. You can **Animate Your Static Mesh Now!!!**
 * Aug 14, 2025: 👋 The inference code of **AnimateAnyMesh** has been released! Thanks for the waiting! The checkpoint will be released in a few days (Still training under the clean code).
 * Jun 26, 2025: 👋 **AnimateAnyMesh** has been accepted by [ICCV2025](https://iccv.thecvf.com/)! We will release the code and the DyMesh Dataset mentioned in the paper asap. Please stay tuned for updates！
 * Jun 11, 2025: 👋 The paper of **AnimateAnyMesh** is available at [Arxiv](https://arxiv.org/abs/2506.09982)! 
@@ -48,7 +48,7 @@ conda activate animateanymesh
 // Install dependencies
 pip install -r requirements.txt
 ```
-You may have to install some dependencies when using bpy. You also have to download the model weights ([HuggingFace](https://huggingface.co/JarrentWu/AnimateAnyMesh/tree/main), [Google Drive](https://drive.google.com/drive/folders/1maN5AHKKRDVylKzNuhX8NkBsOZylzA3u)) and unzip them under the main folder.
+You may have to install some dependencies when using bpy. You also have to download the model weights ([HuggingFace](https://huggingface.co/JarrentWu/AnimateAnyMesh/tree/main), [Google Drive](https://drive.google.com/file/d/1_ixt6pWlUpFvwFn6eV3xuOf1G7g6ijfo/view?usp=sharing)) and unzip them under the main folder.
 
 ## 📖 Usage
 
