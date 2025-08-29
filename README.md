@@ -61,6 +61,13 @@ python test_drive.py --data_dir ./examples --vae_dir ./checkpoints --rf_model_di
 ```
 Then, you are supposed to get a frontal rendered video of a flying dragon & the corresponding FBX export file.
 
+**Tips to get better results with the current AnimateAnyMesh release.**
+
+- **Try different seeds**: For the same prompt and object, outputs can vary significantly across seeds. Some seeds may produce results you find satisfactory and some may not.
+- **Adjust guidance**: If a given prompt yields very small motion, try increasing --guidance_scale (e.g., to 5.0).
+- **Adjust the number of sampled trajs**: Another way to amplify the motion is: setting --num_traj to be smaller than --max_length // 8. For example, for a mesh with 20,000 vertices, we default to sampling 20000 // 8 = 2500 trajectories; you can try setting --num_traj to 2000 or 1500. (Note: Sampling too few trajectories can degrade shape preservation. We train with an 8× downsampling; test-time mismatch may lead to shape distortion.)
+- **If multiple seeds and trajectory counts still fail**: It likely indicates that captions similar to your prompt are rare or OOD problem. In that case, please try rephrasing or changing the prompt. All results shown in the paper and demo can be reproduced by the current model with suitable prompt/seed choices; in our tests we typically tried about three prompt/seed combinations per example.
+
 ## 🎬 Animation Example
 
 ![Demo GIF](https://github.com/animateanymesh/AnimateAnyMesh/blob/main/demo_source/dragon_demo.gif)
