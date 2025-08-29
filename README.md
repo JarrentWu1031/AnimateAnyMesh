@@ -42,7 +42,7 @@ We present <b>AnimateAnyMesh</b>: the first feed-forward universal mesh animatio
 
 ## 🧩 Dataset
 
-The DyMesh dataset is now available, including two subsets with [16-frame](https://www.modelscope.cn/datasets/jarrentwu/DyMesh_16f) and [32-frame](https://www.modelscope.cn/datasets/jarrentwu/DyMesh_32f) sequences respectively. We have filtered out examples with more than 50k vertices. Please note that both subsets are quite large (approximately 1.7TB), so you may choose to download only selected split sub-archives. For example: DyMesh_50000v_16f_0000_part_00 and DyMesh_50000v_16f_0000_part_01. After merging, these contain 50k examples in total. Use the following command to uncompress:
+The DyMesh dataset is now available, including two subsets with [16-frame](https://www.modelscope.cn/datasets/jarrentwu/DyMesh_16f) and [32-frame](https://www.modelscope.cn/datasets/jarrentwu/DyMesh_32f) sequences respectively. We have filtered out examples with more than 50k vertices. Please note that both subsets are quite large (approximately 1.7TB after uncompression), so you may choose to download only selected split sub-archives. For example: DyMesh_50000v_16f_0000_part_00 and DyMesh_50000v_16f_0000_part_01. After merging, these contain 50k examples in total. Use the following command to uncompress:
 ```
 // Debian/Ubuntu:
 sudo apt-get update
