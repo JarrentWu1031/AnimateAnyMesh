@@ -12,9 +12,11 @@ Zijie Wu<sup>1,2</sup>, Chaohui Yu<sup>2</sup>, Fan Wang<sup>2</sup>, Xiang Bai<
 
 <a href="https://animateanymesh.github.io/AnimateAnyMesh/"><img src='https://img.shields.io/badge/Project-AnimateAnyMesh-brightgreen?logo=github' alt='Project'></a>
 <a href="https://arxiv.org/abs/2506.09982"><img src='https://img.shields.io/badge/arXiv-AnimateAnyMesh-B31B1B?logo=arxiv' alt='Paper PDF'></a>
+<a href="https://www.modelscope.cn/collections/DyMesh-Dataset-400fcdb3d60241"><img src="https://img.shields.io/badge/ModelScope-DyMesh Dataset-8A2BE2?logo=alibabacloud&logoColor=white&logoWidth=20" alt="ModelScope Collection"></a>
 <a href="https://www.youtube.com/watch?v=q8xH9B0S4y0"><img src='https://img.shields.io/badge/Video-Demo-FF0000?logo=youtube' alt='Video'></a>
 <a href="https://huggingface.co/JarrentWu/AnimateAnyMesh/tree/main"><img src='https://img.shields.io/badge/HuggingFace-Weights-yellow?logo=huggingface' alt='Hugging Face Weights'></a>
 <a href="https://drive.google.com/file/d/1_ixt6pWlUpFvwFn6eV3xuOf1G7g6ijfo/view?usp=sharing"><img src='https://img.shields.io/badge/Google%20Drive-Weights-blue?logo=googledrive&logoColor=white' alt='Download from Google Drive'></a>
+
 
 We present <b>AnimateAnyMesh</b>: the first feed-forward universal mesh animation framework that enables efficient motion generation for arbitrary 3D meshes. Given a static mesh and prompt, our method generates high-quality animations in only a few seconds.
 
@@ -32,10 +34,24 @@ We present <b>AnimateAnyMesh</b>: the first feed-forward universal mesh animatio
 
 ## 🔥 Latest News
 
+* Aug 29, 2025: 👋 The [**DyMesh Dataset**](https://www.modelscope.cn/collections/DyMesh-Dataset-400fcdb3d60241) is released now, along with the extraction script! We have filtered out data sourced from [AMASS](https://amass.is.tue.mpg.de/) due to its license restriction!
 * Aug 22, 2025: 👋 The model weights ([HuggingFace](https://huggingface.co/JarrentWu/AnimateAnyMesh/tree/main), [Google Drive](https://drive.google.com/file/d/1_ixt6pWlUpFvwFn6eV3xuOf1G7g6ijfo/view?usp=sharing)) of **AnimateAnyMesh** has been released! Thanks for the waiting! We also add FBX/ABC export code for a better usage. You can **Animate Your Static Mesh Now!!!**
 * Aug 14, 2025: 👋 The inference code of **AnimateAnyMesh** has been released! Thanks for the waiting! The checkpoint will be released in a few days (Still training under the clean code).
 * Jun 26, 2025: 👋 **AnimateAnyMesh** has been accepted by [ICCV2025](https://iccv.thecvf.com/)! We will release the code and the DyMesh Dataset mentioned in the paper asap. Please stay tuned for updates！
 * Jun 11, 2025: 👋 The paper of **AnimateAnyMesh** is available at [Arxiv](https://arxiv.org/abs/2506.09982)! 
+
+## 🧩 Dataset
+
+The DyMesh dataset is now available, including two subsets with [16-frame](https://www.modelscope.cn/datasets/jarrentwu/DyMesh_16f) and [32-frame](https://www.modelscope.cn/datasets/jarrentwu/DyMesh_32f) sequences respectively. We have filtered out examples with more than 50k vertices. Please note that both subsets are quite large (approximately 1.7TB), so you may choose to download only selected split sub-archives. For example: DyMesh_50000v_16f_0000_part_00 and DyMesh_50000v_16f_0000_part_01. After merging, these contain 50k examples in total. Use the following command to uncompress:
+```
+// Debian/Ubuntu:
+sudo apt-get update
+sudo apt-get install -y zstd tar -
+
+cd ./tools
+chmod 777 uncompress_dataset.sh
+./uncompress_dataset.sh <DyMesh Dataset Dir> <Output Dir>
+```
 
 ## 🔧 Preparation
 
