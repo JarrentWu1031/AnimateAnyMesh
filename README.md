@@ -15,8 +15,8 @@ Zijie Wu<sup>1,2</sup>, Chaohui Yu<sup>2</sup>, Fan Wang<sup>2</sup>, Xiang Bai<
 <a href="https://huggingface.co/collections/JarrentWu/dymesh-dataset-68b903973ce18433bd75019a"><img src='https://img.shields.io/badge/HuggingFace-DyMesh Dataset-yellow?logo=huggingface' alt='Hugging Face Datasets'></a>
 <a href="https://www.modelscope.cn/collections/DyMesh-Dataset-400fcdb3d60241"><img src="https://img.shields.io/badge/ModelScope-DyMesh Dataset-8A2BE2?logo=alibabacloud&logoColor=white&logoWidth=20" alt="ModelScope Collection"></a>
 <a href="https://www.youtube.com/watch?v=q8xH9B0S4y0"><img src='https://img.shields.io/badge/Video-Demo-FF0000?logo=youtube' alt='Video'></a>
-<a href="https://huggingface.co/JarrentWu/AnimateAnyMesh/tree/main"><img src='https://img.shields.io/badge/HuggingFace-Weights-yellow?logo=huggingface' alt='Hugging Face Weights'></a>
-<a href="https://drive.google.com/file/d/1_ixt6pWlUpFvwFn6eV3xuOf1G7g6ijfo/view?usp=sharing"><img src='https://img.shields.io/badge/Google%20Drive-Weights-blue?logo=googledrive&logoColor=white' alt='Download from Google Drive'></a>
+<a href="https://huggingface.co/JarrentWu/AnimateAnyMesh/tree/main"><img src='https://img.shields.io/badge/HuggingFace-Model Weights-yellow?logo=huggingface' alt='Hugging Face Weights'></a>
+<a href="https://drive.google.com/file/d/1_ixt6pWlUpFvwFn6eV3xuOf1G7g6ijfo/view?usp=sharing"><img src='https://img.shields.io/badge/Google%20Drive-Model Weights-blue?logo=googledrive&logoColor=white' alt='Download from Google Drive'></a>
 
 
 We present <b>AnimateAnyMesh</b>: the first feed-forward universal mesh animation framework that enables efficient motion generation for arbitrary 3D meshes. Given a static mesh and prompt, our method generates high-quality animations in only a few seconds.
