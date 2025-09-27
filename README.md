@@ -50,8 +50,10 @@ sudo apt-get update
 sudo apt-get install -y zstd tar -
 
 cd ./tools
-chmod 777 uncompress_dataset.sh
-./uncompress_dataset.sh <DyMesh Dataset Dir> <Output Dir>
+chmod 777 uncompress_dataset_16f.sh
+chmod 777 uncompress_dataset_32f.sh
+./uncompress_dataset_16f.sh <DyMesh Dataset 16f Dir> <16f Data Output Dir>
+./uncompress_dataset_32f.sh <DyMesh Dataset 32f Dir> <32f Data Output Dir>
 ```
 
 ## 🔧 Preparation
