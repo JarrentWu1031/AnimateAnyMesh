@@ -171,6 +171,7 @@ if __name__ == '__main__':
     
     opt = parser.parse_args()
 
+    ### rescale is necessary if using the provided checkpoint!!!
     opt.rescale = True
 
     main(opt)
