@@ -650,7 +650,7 @@ def drive_mesh_with_trajs_frames(mesh_objects, trajs, output_dir, azi=0.0, ele=0
                 scene.render.filepath = os.path.join(frames_dir, f'frame_{frame:04d}.png')
                 bpy.ops.render.render(write_still=True)
                 print(f"Rendered {view_name} frame {frame}/{num_frames-1}")
-        filename = output_dir.split('/')[-1]
+        filename = os.path.basename(output_dir)
         print("Converting frames to videos...")
         frames = []
         for view_name, frames_dir in frames_dirs.items():
@@ -732,7 +732,7 @@ def drive_mesh_with_trajs_frames_five_views(mesh_objects, trajs, output_dir):
             bpy.ops.render.render(write_still=True)
             print(f"Rendered circle view frame {i}/{64}, angle {i}/64")
             bpy.data.objects.remove(circle_camera, do_unlink=True)
-        filename = output_dir.split('/')[-1]
+        filename = os.path.basename(output_dir)
         print("Converting frames to videos...")
         frames_circle = []
         frames_4views = []
