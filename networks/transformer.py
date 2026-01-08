@@ -251,8 +251,8 @@ class DyMeshMMDiT(nn.Module):
         self.ln_pre_text = nn.LayerNorm(width, device=device, dtype=dtype)
         self.ln_post = nn.LayerNorm(width, device=device, dtype=dtype)
         
-        self.clip_text_model = CLIPTextModel.from_pretrained("sd-legacy/stable-diffusion-v1-5", subfolder="text_encoder").to(device)
-        self.tokenizer = CLIPTokenizer.from_pretrained("sd-legacy/stable-diffusion-v1-5", subfolder="tokenizer")
+        self.clip_text_model = CLIPTextModel.from_pretrained("stable-diffusion-v1-5/stable-diffusion-v1-5", subfolder="text_encoder").to(device)
+        self.tokenizer = CLIPTokenizer.from_pretrained("stable-diffusion-v1-5/stable-diffusion-v1-5", subfolder="tokenizer")
         self.clip_token_mlp = nn.Linear(768, self.backbone.width, device=device, dtype=dtype)
 
         self.input_proj = nn.Linear(input_channels, width, device=device, dtype=dtype)
