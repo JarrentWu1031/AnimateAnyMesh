@@ -74,11 +74,15 @@ You may have to install some dependencies when using bpy. You also have to downl
 
 **DyMeshVAE Training**
 
+```
 torchrun --nproc_per_node=8 train_dvae_dis.py --data_dir <training data dir> --val_data_dir <validation data dir> --train_epoch 1000 --batch_size 64 --validate --is_training --lr 2e-4 --avg_loss --exp test_dvae
+```
 
 **RF Model Training**
 
+```
 torchrun --nproc_per_node=8 train_diff_dis.py --batch_size 64 --vae_exp test_dvae --vae_epoch 1000 --rescale --base_name 40m --data_dir <training data dir> --max_length 4096 --train_epoch 2000 --lr 2e-4 --exp test_rf
+```
 
 ## 📖 Usage
 
