@@ -35,6 +35,7 @@ We present <b>AnimateAnyMesh</b>: the first feed-forward universal mesh animatio
 
 ## 🔥 Latest News
 
+* Feb 25, 2026: 👋 The training code for DyMeshVAE and Text-to-Trajectory RF Model is released! 
 * Aug 29, 2025: 👋 The **DyMesh Dataset**([Huggingface](https://huggingface.co/collections/JarrentWu/dymesh-dataset-68b903973ce18433bd75019a), [Modelscope](https://www.modelscope.cn/collections/DyMesh-Dataset-400fcdb3d60241)) is released now, along with the extraction script! We have filtered out data sourced from [AMASS](https://amass.is.tue.mpg.de/) due to its license restriction!
 * Aug 22, 2025: 👋 The model weights ([HuggingFace](https://huggingface.co/JarrentWu/AnimateAnyMesh/tree/main), [Google Drive](https://drive.google.com/file/d/1_ixt6pWlUpFvwFn6eV3xuOf1G7g6ijfo/view?usp=sharing)) of **AnimateAnyMesh** has been released! Thanks for the waiting! We also add FBX/ABC export code for a better usage. You can **Animate Your Static Mesh Now!!!**
 * Aug 14, 2025: 👋 The inference code of **AnimateAnyMesh** has been released! Thanks for the waiting! The checkpoint will be released in a few days (Still training under the clean code).
@@ -68,6 +69,16 @@ conda activate animateanymesh
 pip install -r requirements.txt
 ```
 You may have to install some dependencies when using bpy. You also have to download the model weights ([HuggingFace](https://huggingface.co/JarrentWu/AnimateAnyMesh/tree/main), [Google Drive](https://drive.google.com/file/d/1_ixt6pWlUpFvwFn6eV3xuOf1G7g6ijfo/view?usp=sharing)) and unzip them under the main folder.
+
+## 🏋️‍♂️ Training
+
+**DyMeshVAE Training**
+
+torchrun --nproc_per_node=8 train_dvae_dis.py --data_dir <training data dir> --val_data_dir <validation data dir> --train_epoch 1000 --batch_size 64 --validate --is_training --lr 2e-4 --avg_loss --exp test_dvae
+
+**RF Model Training**
+
+torchrun --nproc_per_node=8 train_diff_dis.py --batch_size 64 --vae_exp test_dvae --vae_epoch 1000 --rescale --base_name 40m --data_dir <training data dir> --max_length 4096 --train_epoch 2000 --lr 2e-4 --exp test_rf
 
 ## 📖 Usage
 
