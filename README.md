@@ -111,11 +111,18 @@ The exported animated dragon viewed in Blender.
 ## ⭐ Citation
 If you find our work useful for your research, please star this repo and cite our paper. Thanks!
 ```bibtex
-@article{wu2025animateanymesh,
-    author = {Wu, Zijie and Yu, Chaohui and Wang, Fan and Bai, Xiang.},
-    title  = {AnimateAnyMesh: A Feed-Forward 4D Foundation Model for Text-Driven Universal Mesh Animation},
-    journal = {arXiv preprint arxiv:2506.09982},
-    year   = {2025},
+@inproceedings{wu2025animateanymesh,
+  title={Animateanymesh: A feed-forward 4d foundation model for text-driven universal mesh animation},
+  author={Wu, Zijie and Yu, Chaohui and Wang, Fan and Bai, Xiang},
+  booktitle={Proceedings of the IEEE/CVF International Conference on Computer Vision},
+  pages={13557--13568},
+  year={2025}
+}
+@article{wu2026animateanymesh++,
+  title={AnimateAnyMesh++: A Flexible 4D Foundation Model for High-Fidelity Text-Driven Mesh Animation},
+  author={Wu, Zijie and Yu, Chaohui and Wang, Fan and Bai, Xiang},
+  journal={arXiv preprint arXiv:2604.26917},
+  year={2026}
 }
 ```
 
