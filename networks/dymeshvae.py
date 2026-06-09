@@ -210,7 +210,7 @@ class SyncAttention(nn.Module):
         v2 = self.to_v2(v2_stream)
         q, k, v1, v2 = map(lambda t: rearrange(t, 'b n (h d) -> b h n d', h=h), (q, k, v1, v2))
         v_cat = torch.cat([v1, v2], dim=-1)
-        with torch.backends.cuda.sdp_kernel(enable_math=False):
+        with torch.backends.cuda.sdp_kernel(enable_math=True):
             out_cat = F.scaled_dot_product_attention(q, k, v_cat)
         out1, out2 = out_cat.chunk(2, dim=-1)
         out1 = rearrange(out1, 'b h n d -> b n (h d)')

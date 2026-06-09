@@ -37,7 +37,7 @@ def main(opt):
     torch.cuda.manual_seed_all(seed)
     
     # Video save dir
-    video_save_dir = os.path.join(opt.video_save_dir, opt.rf_exp)
+    video_save_dir = os.path.abspath(os.path.join(opt.video_save_dir, opt.rf_exp))
     if not os.path.exists(video_save_dir):
         os.makedirs(video_save_dir)
     
@@ -145,7 +145,7 @@ def main(opt):
         # assign trajs for each parts
         trajs = [outputs[0][:, idx].cpu() for idx in all_indices]
         # render video
-        drive_mesh_with_trajs_frames(mesh_objects, trajs, "{}/{}".format(video_save_dir, filepath.split("/")[-1].split(".")[0]), azi=opt.azi, ele=opt.ele, export_format=opt.export_format)
+        drive_mesh_with_trajs_frames(mesh_objects, trajs, os.path.join(video_save_dir, os.path.splitext(os.path.basename(filepath))[0]), azi=opt.azi, ele=opt.ele, export_format=opt.export_format)
     
 if __name__ == '__main__':
     import argparse
